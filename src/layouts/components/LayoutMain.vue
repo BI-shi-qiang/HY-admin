@@ -70,9 +70,7 @@ const appMainHeight = computed(() => {
 });
 
 // 页面切换动画名称
-const transitionName = computed(() => {
-  return settingsStore.pageSwitchingAnimation ?? "";
-});
+const transitionName = ref("fade-slide");
 </script>
 
 <style lang="scss" scoped>

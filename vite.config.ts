@@ -5,8 +5,6 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
-import { mockDevServerPlugin } from "vite-plugin-mock-dev-server";
-
 import UnoCSS from "unocss/vite";
 import { resolve } from "path";
 import { name, version } from "./package.json";
@@ -48,11 +46,15 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           target: env.VITE_APP_API_URL,
           rewrite: (path: string) => path.replace(new RegExp(`^${env.VITE_APP_BASE_API}`), ""),
         },
+        // 图片等静态资源也转发到后端
+        "/uploads": {
+          changeOrigin: true,
+          target: env.VITE_APP_API_URL,
+        },
       },
     },
     plugins: [
       vue(),
-      ...(env.VITE_MOCK_DEV_SERVER === "true" ? [mockDevServerPlugin()] : []),
       UnoCSS(),
       // API 自动导入
       AutoImport({
@@ -94,7 +96,6 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         "pinia",
         "axios",
         "@vueuse/core",
-        "codemirror-editor-vue3",
         "exceljs",
         "path-to-regexp",
         "echarts/core",
@@ -105,7 +106,6 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         "nprogress",
         "sortablejs",
         "qs",
-        "vxe-table",
         "path-browserify",
         "lodash-es",
         "@element-plus/icons-vue",

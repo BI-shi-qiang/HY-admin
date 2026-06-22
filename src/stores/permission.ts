@@ -24,8 +24,6 @@ function resolveViewComponent(componentPath: string) {
 export const usePermissionStore = defineStore("permission", () => {
   // 所有路由（静态路由 + 动态路由）
   const routes = ref<RouteRecordRaw[]>([]);
-  // 混合布局的左侧菜单路由
-  const mixLayoutSideMenus = ref<RouteRecordRaw[]>([]);
   // 动态路由是否已生成
   const isRouteGenerated = ref(false);
 
@@ -46,12 +44,6 @@ export const usePermissionStore = defineStore("permission", () => {
     }
   }
 
-  /** 设置混合布局左侧菜单 */
-  const setMixLayoutSideMenus = (parentPath: string) => {
-    const parentMenu = routes.value.find((item: RouteRecordRaw) => item.path === parentPath);
-    mixLayoutSideMenus.value = parentMenu?.children || [];
-  };
-
   /** 重置路由状态 */
   const resetRouter = () => {
     // 移除动态添加的路由
@@ -64,7 +56,6 @@ export const usePermissionStore = defineStore("permission", () => {
 
     // 重置所有状态
     routes.value = [...constantRoutes];
-    mixLayoutSideMenus.value = [];
     isRouteGenerated.value = false;
   };
 
@@ -124,10 +115,8 @@ export const usePermissionStore = defineStore("permission", () => {
 
   return {
     routes,
-    mixLayoutSideMenus,
     isRouteGenerated,
     generateRoutes,
-    setMixLayoutSideMenus,
     resetRouter,
     reloadDynamicRoutesOnce,
     reloadPermissionSnapshotOnce,

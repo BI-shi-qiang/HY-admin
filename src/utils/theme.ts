@@ -123,6 +123,17 @@ export function applyTheme(colors: Record<string, string>) {
     el.style.setProperty(`--el-color-${key}`, value);
   });
 
+  // 同步侧边栏背景色：浅色模式使用主题色的浅色变体
+  const isDark = el.classList.contains(ThemeMode.DARK);
+  if (!isDark) {
+    el.style.setProperty("--menu-background", colors["primary-light-9"]);
+    el.style.setProperty("--sidebar-logo-background", colors["primary-light-9"]);
+  } else {
+    // 暗黑模式下清除内联样式，让 stylesheet 的 html.dark 规则生效
+    el.style.removeProperty("--menu-background");
+    el.style.removeProperty("--sidebar-logo-background");
+  }
+
   // 确保主题色立即生效，强制重新渲染
   requestAnimationFrame(() => {
     // 触发样式重新计算
@@ -140,18 +151,5 @@ export function toggleDarkMode(isDark: boolean) {
     document.documentElement.classList.add(ThemeMode.DARK);
   } else {
     document.documentElement.classList.remove(ThemeMode.DARK);
-  }
-}
-
-/**
- * 切换浅色主题下的侧边栏颜色方案
- *
- * @param isBlue 布尔值，表示是否开启深蓝色侧边栏颜色方案
- */
-export function toggleSidebarColor(isBuleSidebar: boolean) {
-  if (isBuleSidebar) {
-    document.documentElement.classList.add("sidebar-color-blue");
-  } else {
-    document.documentElement.classList.remove("sidebar-color-blue");
   }
 }

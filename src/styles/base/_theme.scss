@@ -81,20 +81,6 @@ $menu-bg-classic-blue: #304156;
 }
 
 // ============================================
-// 深蓝色侧边栏主题
-// ============================================
-
-html.sidebar-color-blue {
-  --menu-background: #{$menu-bg-classic-blue};
-  --menu-text: #bfcbd9;
-  --menu-active-text: var(--el-menu-active-color);
-  // 自动派生：背景色加深 20% → #263445
-  --menu-hover: color-mix(in srgb, var(--menu-background) 80%, #000 20%);
-  --sidebar-logo-background: #2d3748;
-  --sidebar-logo-text-color: #fff;
-}
-
-// ============================================
 // 暗黑主题
 // ============================================
 
@@ -129,12 +115,4 @@ html.dark {
   .el-table {
     --el-table-current-row-bg-color: var(--el-fill-color-light);
   }
-}
-
-// ============================================
-// 无障碍模式
-// ============================================
-
-html.color-weak {
-  filter: invert(80%);
 }

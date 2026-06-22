@@ -25,7 +25,6 @@ export function useLayout() {
   const isDesktop = computed(() => width.value >= DESKTOP_BREAKPOINT);
   const isMobile = computed(() => appStore.device === DeviceEnum.MOBILE);
 
-  // 监听窗口变化，自动调整设备类型和侧边栏
   watchEffect(() => {
     const device = isDesktop.value ? DeviceEnum.DESKTOP : DeviceEnum.MOBILE;
     appStore.toggleDevice(device);
@@ -41,47 +40,23 @@ export function useLayout() {
   // 布局状态
   // ============================================
 
-  const currentLayout = computed(() => settingsStore.layout);
   const isSidebarOpen = computed(() => appStore.sidebar.opened);
   const showTagsView = computed(() => settingsStore.showTagsView);
   const showSettings = computed(() => defaults.showSettings);
-  const showLogo = computed(() => settingsStore.showAppLogo);
+  const showLogo = computed(() => true);
 
   const layoutClass = computed(() => ({
     hideSidebar: !appStore.sidebar.opened,
     openSidebar: appStore.sidebar.opened,
     mobile: appStore.device === DeviceEnum.MOBILE,
-    [`layout-${settingsStore.layout}`]: true,
   }));
 
   // ============================================
   // 菜单数据
   // ============================================
 
-  /**
-   * 路由列表。
-   *
-   * 左侧/顶部菜单共用，由权限 store 生成。
-   */
   const routes = computed(() => permissionStore.routes);
 
-  /**
-   * 混合布局侧边菜单。
-   *
-   * 根据当前激活的顶部菜单路径动态计算。
-   */
-  const sideMenuRoutes = computed(() => permissionStore.mixLayoutSideMenus);
-
-  /**
-   * 顶部菜单激活路径。
-   */
-  const activeTopMenuPath = computed(() => appStore.activeTopMenuPath);
-
-  /**
-   * 当前激活菜单。
-   *
-   * 优先取路由 meta.activeMenu，否则取当前路径。
-   */
   const activeMenu = computed(() => {
     const { meta, path } = route;
     return meta?.activeMenu || path;
@@ -104,7 +79,6 @@ export function useLayout() {
     isDesktop,
     isMobile,
     // 布局
-    currentLayout,
     layoutClass,
     isSidebarOpen,
     showTagsView,
@@ -112,9 +86,7 @@ export function useLayout() {
     showLogo,
     // 菜单
     routes,
-    sideMenuRoutes,
     activeMenu,
-    activeTopMenuPath,
     // 方法
     toggleSidebar,
     closeSidebar,

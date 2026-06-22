@@ -9,13 +9,9 @@ export interface AppSettings {
   version: string;
   showSettings: boolean;
   showTagsView: boolean;
-  showAppLogo: boolean;
-  layout: "left" | "top" | "mix";
+  layout: "left";
   themeColor: string;
   theme: ThemeMode;
   size: string;
   language: string;
-  showWatermark: boolean;
-  watermarkContent: string;
-  sidebarColorScheme: "classic-blue" | "minimal-white";
 }

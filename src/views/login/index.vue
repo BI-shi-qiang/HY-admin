@@ -15,32 +15,14 @@
 
     <div class="login-page__body">
       <section class="login-hero">
-        <div class="login-hero__badge">
-          <span class="login-hero__dot" />
-          Enterprise Ready
+        <!-- TODO: 替换为实际插画图片，建议尺寸 400×400 以上 -->
+        <div class="login-hero__image">
+          <img
+            src="@/assets/images/login/login.png"
+            alt="illustration"
+            onerror="this.style.display = 'none'"
+          />
         </div>
-        <h1 class="login-hero__title">企业级管理系统</h1>
-        <p class="login-hero__subtitle">
-          提供安全、高效、可扩展的管理解决方案，助力企业数字化转型与业务增长。
-        </p>
-        <ul class="login-hero__features">
-          <li>
-            <span>✓</span>
-            统一身份认证与权限管理
-          </li>
-          <li>
-            <span>✓</span>
-            支持多租户模式与租户隔离
-          </li>
-          <li>
-            <span>✓</span>
-            数据安全与操作审计
-          </li>
-          <li>
-            <span>✓</span>
-            灵活扩展与高可用架构
-          </li>
-        </ul>
       </section>
 
       <section class="login-card">
@@ -52,21 +34,12 @@
             <div class="login-card__title-row">
               <span class="login-card__title">{{ appConfig.title }}</span>
             </div>
-            <div v-if="appConfig.version || tenantEnabled" class="login-card__version-row">
-              <el-text size="small" type="info">VERSION</el-text>
-              <el-tag v-if="appConfig.version" size="small" effect="light" round>
-                {{ `v${appConfig.version}` }}
-              </el-tag>
-              <el-tag v-if="tenantEnabled" type="success" size="small" effect="light" round>
-                多租户
-              </el-tag>
-            </div>
           </div>
         </div>
 
         <transition name="fade-slide" mode="out-in">
           <div v-if="component === 'login'" key="login" class="login-card__form">
-            <h3 class="login-form__title text-center">{{ t("login.login") }}</h3>
+            <h3 class="login-form__title text-center">{{ appConfig.title }}</h3>
             <el-form
               ref="loginFormRef"
               :model="loginFormData"
@@ -145,7 +118,7 @@
                 <el-button
                   :loading="loading"
                   type="primary"
-                  class="w-full"
+                  class="w-full btn-orange"
                   @click="handleLoginSubmit"
                 >
                   {{ t("login.login") }}
@@ -160,7 +133,7 @@
               </el-link>
             </div>
 
-            <div class="login-form__social">
+            <!-- <div class="login-form__social">
               <div class="social-divider">
                 <span class="social-divider__line" />
                 <span class="social-divider__text">{{ t("login.otherLoginMethods") }}</span>
@@ -172,7 +145,7 @@
                 <span class="social-icons__item"><span class="i-svg:github" /></span>
                 <span class="social-icons__item"><span class="i-svg:gitee" /></span>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <component
@@ -184,12 +157,12 @@
           />
         </transition>
 
-        <footer class="login-card__footer">
+        <!-- <footer class="login-card__footer">
           <el-text size="small">
             Copyright © 2021 - 2026 youlai.tech
             <a href="http://beian.miit.gov.cn/" target="_blank">皖ICP备00064962号</a>
           </el-text>
-        </footer>
+        </footer> -->
       </section>
     </div>
   </div>
@@ -213,8 +186,6 @@ const { t } = useI18n();
 const userStore = useUserStore();
 const route = useRoute();
 const component = ref<LayoutMap>("login");
-
-const tenantEnabled = appConfig.tenantEnabled;
 
 const formComponents = {
   register: defineAsyncComponent(() => import("./components/Register.vue")),
@@ -306,16 +277,7 @@ onMounted(() => getCaptcha());
   min-height: 100vh;
   padding: clamp(1rem, 3vw, 2rem);
   overflow: hidden;
-  background: #f5f8ff;
-
-  &::before {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    content: "";
-    background: url("@/assets/images/login/bg.svg") center/cover no-repeat;
-  }
+  background: #f2f3f5;
 }
 
 .dark .login-page {
@@ -325,10 +287,6 @@ onMounted(() => getCaptcha());
   --login-card-border: rgb(255 255 255 / 7%);
 
   background: #0b0f19;
-
-  &::before {
-    background-image: url("@/assets/images/login/bg-dark.svg");
-  }
 }
 
 .login-page__toolbar {
@@ -370,7 +328,7 @@ onMounted(() => getCaptcha());
   z-index: 1;
   display: grid;
   flex: 1;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: clamp(2rem, 4vw, 4rem);
   align-items: stretch;
   padding: clamp(1.5rem, 2vw, 2.5rem);
@@ -378,11 +336,25 @@ onMounted(() => getCaptcha());
 
 .login-hero {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
   padding: clamp(1rem, 2vw, 2rem);
   color: var(--login-hero-text);
   animation: heroIn 0.8s ease-out;
+}
+
+.login-hero__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 480px;
+
+  img {
+    width: 100%;
+    max-height: 55vh;
+    object-fit: contain;
+  }
 }
 
 .login-hero__badge {
@@ -454,7 +426,7 @@ onMounted(() => getCaptcha());
   flex-direction: column;
   gap: 20px;
   align-self: center;
-  justify-self: end;
+  justify-self: center;
   width: min(420px, 100%);
   padding: clamp(1.5rem, 3vw, 2.25rem);
   margin-inline: auto;
@@ -672,5 +644,15 @@ onMounted(() => getCaptcha());
 .fade-slide-leave-from {
   opacity: 1;
   transform: translateY(0);
+}
+
+// 橙色登录按钮
+.btn-orange {
+  --el-button-bg-color: #e87345;
+  --el-button-border-color: #e87345;
+  --el-button-hover-bg-color: #d1623a;
+  --el-button-hover-border-color: #d1623a;
+  --el-button-active-bg-color: #c0572f;
+  --el-button-active-border-color: #c0572f;
 }
 </style>

@@ -2,8 +2,6 @@ import type { RouteRecordRaw } from "vue-router";
 import NProgress from "@/plugins/nprogress";
 import router from "@/router";
 import { usePermissionStore, useUserStore } from "@/stores";
-import { useTenantStoreHook } from "@/stores/tenant";
-import { isTenantEnabled } from "@/utils/tenant";
 import { addRecentMenu } from "@/composables/useRecentMenus";
 
 /**
@@ -42,9 +40,6 @@ export function setupPermissionGuard() {
         if (!userStore.userInfo?.roles?.length) {
           await userStore.getUserInfo();
         }
-
-        // 加载用户租户列表（VITE_APP_TENANT_ENABLED=true 时生效）
-        await initTenantContext();
 
         const dynamicRoutes = await permissionStore.generateRoutes();
         dynamicRoutes.forEach((route: RouteRecordRaw) => {
@@ -85,20 +80,4 @@ export function setupPermissionGuard() {
       addRecentMenu(to.path, to.meta.title as string, icon);
     }
   });
-}
-
-// ============================================
-// 多租户支持（可选）
-// ============================================
-
-/** 初始化多租户上下文，未启用或失败时静默跳过 */
-async function initTenantContext(): Promise<void> {
-  // 多租户关闭时不初始化租户上下文
-  if (!isTenantEnabled()) return;
-
-  try {
-    await useTenantStoreHook().loadTenant();
-  } catch {
-    // 静默失败，不影响主流程
-  }
 }

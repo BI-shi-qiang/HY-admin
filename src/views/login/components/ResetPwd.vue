@@ -11,7 +11,7 @@
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="warning" class="w-full" @click="submit">
+        <el-button type="primary" class="w-full btn-orange" @click="submit">
           {{ t("login.resetPassword") }}
         </el-button>
       </el-form-item>
@@ -55,3 +55,14 @@ const submit = async () => {
   ElMessage.warning("开发中 ...");
 };
 </script>
+
+<style lang="scss" scoped>
+.btn-orange {
+  --el-button-bg-color: #e87345;
+  --el-button-border-color: #e87345;
+  --el-button-hover-bg-color: #d1623a;
+  --el-button-hover-border-color: #d1623a;
+  --el-button-active-bg-color: #c0572f;
+  --el-button-active-border-color: #c0572f;
+}
+</style>

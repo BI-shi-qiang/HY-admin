@@ -218,7 +218,12 @@
           </el-select>
         </el-form-item>
         <el-form-item label="通知内容" prop="content">
-          <WangEditor v-model="formData.content" height="350px" />
+          <el-input
+            v-model="formData.content"
+            type="textarea"
+            :rows="12"
+            placeholder="请输入通知内容"
+          />
         </el-form-item>
       </el-form>
       <template #footer>

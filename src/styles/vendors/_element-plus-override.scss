@@ -158,6 +158,12 @@ html.dark .el-table--striped .el-table__body tr.el-table__row--striped td {
   justify-content: flex-end;
 }
 
+/* 侧边栏菜单 — 背景跟随主题色变化，hover 使用略深色 */
+.layout__sidebar > .el-menu {
+  --el-menu-bg-color: var(--menu-background);
+  --el-menu-hover-bg-color: var(--el-color-primary-light-8);
+}
+
 /* 弹出菜单统一使用主题变量 */
 .el-menu--popup {
   --el-menu-bg-color: var(--menu-background);

@@ -6,34 +6,17 @@ const AUTH_BASE_URL = "/api/v1/auth";
 const AuthAPI = {
   /** 登录接口*/
   login(data: LoginRequest) {
-    const payload: Pick<
-      LoginRequest,
-      "username" | "password" | "captchaId" | "captchaCode" | "tenantId"
-    > = {
+    const payload: Pick<LoginRequest, "username" | "password" | "captchaId" | "captchaCode"> = {
       username: data.username,
       password: data.password,
       captchaId: data.captchaId,
       captchaCode: data.captchaCode,
     };
 
-    // tenantId 可选，仅在提供时包含（多租户功能）
-    if (typeof data.tenantId !== "undefined") {
-      payload.tenantId = data.tenantId;
-    }
-
     return request<unknown, LoginResponse>({
       url: `${AUTH_BASE_URL}/login`,
       method: "post",
       data: payload,
-    });
-  },
-
-  /** 切换租户(平台用户) - 返回新的 token */
-  switchTenant(tenantId: number) {
-    return request<unknown, LoginResponse>({
-      url: `${AUTH_BASE_URL}/switch-tenant`,
-      method: "post",
-      params: { tenantId },
     });
   },
 

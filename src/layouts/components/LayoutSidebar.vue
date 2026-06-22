@@ -29,7 +29,7 @@ import { useRoute } from "vue-router";
 import path from "path-browserify";
 import type { MenuInstance } from "element-plus";
 import type { RouteRecordRaw } from "vue-router";
-import { SidebarColor, ThemeMode } from "@/enums/settings";
+import { ThemeMode } from "@/enums/settings";
 import { useSettingsStore, useAppStore } from "@/stores";
 import { isExternal } from "@/utils/index";
 import LayoutSidebarItem from "./LayoutSidebarItem.vue";
@@ -63,18 +63,14 @@ const expandedMenuIndexes = ref<string[]>([]);
 // 获取主题
 const theme = computed(() => settingsStore.resolvedTheme);
 
-// 获取浅色主题下的侧边栏配色方案
-const sidebarColorScheme = computed(() => settingsStore.sidebarColorScheme);
-
-// 菜单主题属性
+// 菜单主题属性（暗黑模式下使用深色菜单背景）
 const menuThemeProps = computed(() => {
-  const isDarkOrClassicBlue =
-    theme.value === ThemeMode.DARK || sidebarColorScheme.value === SidebarColor.CLASSIC_BLUE;
+  const isDark = theme.value === ThemeMode.DARK;
 
   return {
-    backgroundColor: isDarkOrClassicBlue ? variables["menu-background"] : undefined,
-    textColor: isDarkOrClassicBlue ? variables["menu-text"] : undefined,
-    activeTextColor: isDarkOrClassicBlue ? variables["menu-active-text"] : undefined,
+    backgroundColor: isDark ? variables["menu-background"] : undefined,
+    textColor: isDark ? variables["menu-text"] : undefined,
+    activeTextColor: isDark ? variables["menu-active-text"] : undefined,
   };
 });
 

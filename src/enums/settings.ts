@@ -25,20 +25,6 @@ export const enum ThemeMode {
 }
 
 /**
- * 侧边栏配色方案枚举
- */
-export const enum SidebarColor {
-  /**
-   * 经典蓝
-   */
-  CLASSIC_BLUE = "classic-blue",
-  /**
-   * 极简白
-   */
-  MINIMAL_WHITE = "minimal-white",
-}
-
-/**
  * 菜单布局枚举
  */
 export const enum LayoutMode {
@@ -46,15 +32,6 @@ export const enum LayoutMode {
    * 左侧菜单布局
    */
   LEFT = "left",
-  /**
-   * 顶部菜单布局
-   */
-  TOP = "top",
-
-  /**
-   * 混合菜单布局
-   */
-  MIX = "mix",
 }
 
 /**
@@ -70,26 +47,6 @@ export const enum SidebarStatus {
    * 关闭
    */
   CLOSED = "closed",
-}
-
-/**
- * 组件尺寸枚举
- */
-export const enum ComponentSize {
-  /**
-   * 默认
-   */
-  DEFAULT = "default",
-
-  /**
-   * 大型
-   */
-  LARGE = "large",
-
-  /**
-   * 小型
-   */
-  SMALL = "small",
 }
 
 /**
@@ -121,31 +78,3 @@ export const enum DeviceEnum {
    */
   MOBILE = "mobile",
 }
-
-/**
- * 页面切换动画枚举
- */
-export const enum PageSwitchingAnimationEnum {
-  /**
-   * 无动画
-   */
-  NONE = "none",
-  /**
-   * 淡入淡出
-   */
-  FADE = "fade",
-  /**
-   * 平滑切换
-   */
-  FADE_SLIDE = "fade-slide",
-  /**
-   * 缩放切换
-   */
-  FADE_SCALE = "fade-scale",
-}
-export const PageSwitchingAnimationOptions: Record<string, OptionItem> = {
-  none: { value: "none", label: "无动画" },
-  fade: { value: "fade", label: "淡入淡出" },
-  "fade-slide": { value: "fade-slide", label: "平滑切换" },
-  "fade-scale": { value: "fade-scale", label: "缩放切换" },
-};

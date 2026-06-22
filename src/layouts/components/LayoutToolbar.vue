@@ -2,19 +2,9 @@
   <div :class="['navbar-actions', navbarActionsClass]">
     <!-- 桌面端工具项 -->
     <template v-if="isDesktop">
-      <!-- 搜索 -->
-      <div class="navbar-actions__item">
-        <CommandPalette />
-      </div>
-
       <!-- 全屏 -->
       <div class="navbar-actions__item">
         <Fullscreen />
-      </div>
-
-      <!-- 布局大小 -->
-      <div class="navbar-actions__item">
-        <SizeSelect />
       </div>
 
       <!-- 语言选择 -->
@@ -25,11 +15,6 @@
       <!-- 通知 -->
       <div class="navbar-actions__item">
         <NoticeDropdown />
-      </div>
-
-      <!-- 租户选择（如果启用多租户）-->
-      <div v-if="showTenantSwitcher" class="navbar-actions__item">
-        <TenantSwitcher @change="handleTenantChange" />
       </div>
     </template>
 
@@ -70,52 +55,24 @@
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import { defaults } from "@/settings";
-import { DeviceEnum, SidebarColor, ThemeMode, LayoutMode } from "@/enums/settings";
+import { DeviceEnum, ThemeMode } from "@/enums/settings";
 import { useAppStore, useSettingsStore, useUserStore } from "@/stores";
 
 // 导入子组件
-import CommandPalette from "@/components/CommandPalette/index.vue";
 import Fullscreen from "@/components/Fullscreen/index.vue";
-import SizeSelect from "@/components/SizeSelect/index.vue";
 import LangSelect from "@/components/LangSelect/index.vue";
 import NoticeDropdown from "@/components/NoticeDropdown/index.vue";
-import TenantSwitcher from "@/components/TenantSwitcher/index.vue";
-import { useTenantStoreHook } from "@/stores/tenant";
 
 const { t } = useI18n();
 const appStore = useAppStore();
 const settingStore = useSettingsStore();
 const userStore = useUserStore();
-const tenantStore = useTenantStoreHook();
 
 const route = useRoute();
 const router = useRouter();
 
 // 是否为桌面设备
 const isDesktop = computed(() => appStore.device === DeviceEnum.DESKTOP);
-
-const canSwitchTenant = computed(() => userStore.userInfo?.canSwitchTenant === true);
-
-// 是否显示租户选择
-const showTenantSwitcher = computed(() => {
-  if (!canSwitchTenant.value) {
-    return false;
-  }
-  return tenantStore.tenantList.length > 1;
-});
-
-function handleTenantChange(tenantId: number) {
-  tenantStore.switchTenant(tenantId).then(
-    () => {
-      ElMessage.success("切换租户成功");
-      window.location.href = "/";
-    },
-    (error: any) => {
-      ElMessage.error(error.message || "切换租户失败");
-    }
-  );
-}
-
 /**
  * 打开个人中心页面
  */
@@ -123,29 +80,11 @@ function handleProfileClick() {
   router.push({ name: "Profile" });
 }
 
-// 根据主题和侧边栏配色方案选择样式类
+// 根据主题暗黑/明亮选择样式类
 const navbarActionsClass = computed(() => {
-  const { resolvedTheme, sidebarColorScheme, layout } = settingStore;
-
-  // 暗黑主题下，所有布局都使用白色文字
-  if (resolvedTheme === ThemeMode.DARK) {
+  if (settingStore.resolvedTheme === ThemeMode.DARK) {
     return "navbar-actions--white-text";
   }
-
-  // 明亮主题下
-  if (resolvedTheme === ThemeMode.LIGHT) {
-    // 顶部布局和混合布局的顶部区域：
-    // - 如果侧边栏是经典蓝色，使用白色文字
-    // - 如果侧边栏是极简白色，使用深色文字
-    if (layout === LayoutMode.TOP || layout === LayoutMode.MIX) {
-      if (sidebarColorScheme === SidebarColor.CLASSIC_BLUE) {
-        return "navbar-actions--white-text";
-      } else {
-        return "navbar-actions--dark-text";
-      }
-    }
-  }
-
   return "navbar-actions--dark-text";
 });
 
@@ -278,21 +217,6 @@ function handleSettingsClick() {
   .user-profile__name {
     color: color-mix(in srgb, var(--el-color-white) 85%, transparent);
   }
-
-  // 租户选择器在白色文字模式下的样式
-  ::v-deep(.tenant-switcher__trigger) {
-    color: color-mix(in srgb, var(--el-color-white) 85%, transparent);
-  }
-  ::v-deep(.tenant-switcher__trigger .tenant-switcher__icon) {
-    color: color-mix(in srgb, var(--el-color-white) 85%, transparent);
-  }
-  ::v-deep(.tenant-switcher__trigger:hover) {
-    color: var(--el-color-white);
-    background: color-mix(in srgb, var(--el-color-white) 10%, transparent);
-  }
-  ::v-deep(.tenant-switcher__trigger:hover .tenant-switcher__icon) {
-    color: var(--el-color-white);
-  }
 }
 
 // 深色文字样式（用于浅色背景：明亮主题下的左侧布局等）
@@ -313,21 +237,6 @@ function handleSettingsClick() {
 
   .user-profile__name {
     color: var(--el-text-color-regular) !important;
-  }
-
-  // 租户选择器在深色文字模式下的样式
-  ::v-deep(.tenant-switcher__trigger) {
-    color: var(--el-text-color-regular) !important;
-  }
-  ::v-deep(.tenant-switcher__trigger .tenant-switcher__icon) {
-    color: var(--el-text-color-regular) !important;
-  }
-  ::v-deep(.tenant-switcher__trigger:hover) {
-    color: var(--el-color-primary) !important;
-    background: var(--el-fill-color-light);
-  }
-  ::v-deep(.tenant-switcher__trigger:hover .tenant-switcher__icon) {
-    color: var(--el-color-primary) !important;
   }
 }
 

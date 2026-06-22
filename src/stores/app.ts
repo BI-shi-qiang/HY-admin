@@ -12,9 +12,9 @@ export const useAppStore = defineStore("app", () => {
   const device = useStorage(STORAGE_KEYS.DEVICE, DeviceEnum.DESKTOP);
 
   /**
-   * 组件默认尺寸
+   * 组件默认尺寸（固定为 default，不再支持切换）
    */
-  const size = useStorage(STORAGE_KEYS.SIZE, defaults.size);
+  const size = ref("default");
 
   /**
    * 当前语言
@@ -33,11 +33,6 @@ export const useAppStore = defineStore("app", () => {
     opened: sidebarStatus.value === SidebarStatus.OPENED,
     withoutAnimation: false,
   });
-
-  /**
-   * 当前激活的顶部菜单路径
-   */
-  const activeTopMenuPath = useStorage(STORAGE_KEYS.ACTIVE_TOP_MENU_PATH, "");
 
   /**
    * 内容区是否全屏
@@ -95,13 +90,6 @@ export const useAppStore = defineStore("app", () => {
   }
 
   /**
-   * 设置顶部菜单激活路径
-   */
-  function setActiveTopMenuPath(path: string) {
-    activeTopMenuPath.value = path;
-  }
-
-  /**
    * 切换内容区全屏状态
    */
   function toggleContentFullscreen() {
@@ -121,9 +109,7 @@ export const useAppStore = defineStore("app", () => {
     toggleSidebar,
     closeSidebar,
     openSidebar,
-    setActiveTopMenuPath,
     toggleContentFullscreen,
-    activeTopMenuPath,
   };
 });
 
