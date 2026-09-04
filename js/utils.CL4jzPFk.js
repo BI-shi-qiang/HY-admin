@@ -1,1 +1,0 @@
-import"./stores.BnAc2vqR.js";function e(e){return/^(https?:|http?:|mailto:|tel:)/.test(e)}function t(e){return e===0?`-`:Math.abs(e*100).toFixed(2).replace(/\.?0+$/,``)+`%`}export{e as n,t};
