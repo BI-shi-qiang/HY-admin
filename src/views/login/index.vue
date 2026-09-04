@@ -200,7 +200,7 @@ const codeLoading = ref(false);
 
 const rememberMe = AuthStorage.getRememberMe();
 const loginFormData = ref<LoginRequest>({
-  username: "admin",
+  username: "001",
   password: "123456",
   captchaId: "",
   captchaCode: "",
