@@ -23,6 +23,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const env = loadEnv(mode, process.cwd());
 
   return {
+    // base: "./", // 部署时需要，本地删掉
     resolve: {
       alias: {
         "@": pathSrc,
