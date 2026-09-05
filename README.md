@@ -1,6 +1,6 @@
 <div align="center">
 
-<img alt="荷源" width="80" src="./src/assets/images/logo-app.png">
+<img alt="荷源" width="80" src="./src/assets/images/logo.png">
 
 # 荷源后台管理
 
@@ -14,12 +14,12 @@
 </div>
 
 <div align="center">
-  <a target="_blank" href="https://admin.heyuan.ink">🖥️ 在线预览</a> | <a target="_blank" href="https://heyuan.ink">🌐 官网</a> | <a target="_blank" href="https://github.com/BI-shi-qiang/HY-admin">💻 源码仓库</a>
+  <a target="_blank" href="https://admin.heyuan.ink">🖥️ 在线预览</a> | <a target="_blank" href="https://bsq.asia">🌐 前台个人网站</a> | <a target="_blank" href="https://github.com/BI-shi-qiang/HY-admin">💻 源码仓库</a>
 </div>
 
 ## 项目简介
 
-荷源后台管理（heyuan-admin）基于 Vue3、Vite、TypeScript 和 Element-Plus 搭建的开箱即用企业级后台管理前端，配套 Java 后端提供完整的前后端分离开发方案。
+荷源后台管理（heyuan-admin）基于 Vue3、Vite、TypeScript 和 Element-Plus 搭建的开箱即用企业级后台管理前端，配套 Nestjs 后端提供完整的前后端分离开发方案,借助有来技术框架快速搭建
 
 ## 项目特色
 
@@ -40,22 +40,6 @@
   </tr>
   <tr>
     <td><img alt="PC预览3" width="400" src="./public/images/preview/pc-03.png"></td>
-    <td><img alt="PC预览4" width="400" src="./public/images/preview/pc-04.png"></td>
-  </tr>
-  <tr>
-    <td><img alt="PC预览5" width="400" src="./public/images/preview/pc-05.png"></td>
-    <td><img alt="PC预览6" width="400" src="./public/images/preview/pc-06.png"></td>
-  </tr>
-</table>
-
-**移动端**
-
-<table align="center">
-  <tr>
-    <td><img alt="APP预览1" width="200" src="./public/images/preview/app-01.png"></td>
-    <td><img alt="APP预览2" width="200" src="./public/images/preview/app-02.png"></td>
-    <td><img alt="APP预览3" width="200" src="./public/images/preview/app-03.png"></td>
-    <td><img alt="APP预览4" width="200" src="./public/images/preview/app-04.png"></td>
   </tr>
 </table>
 
@@ -97,26 +81,6 @@ pnpm run dev
 pnpm run build
 ```
 
-以下是 Nginx 的配置示例：
-
-```nginx
-server {
-    listen      80;
-    server_name localhost;
-
-    location / {
-        root   /usr/share/nginx/html;
-        index  index.html index.htm;
-    }
-
-    # 反向代理配置
-    location /prod-api/ {
-        # 请将 api.heyuan.ink 替换为您的后端 API 地址，并注意保留后面的斜杠 /
-        proxy_pass http://api.heyuan.ink/;
-    }
-}
-```
-
 ## 本地Mock
 
 项目同时支持在线和本地 Mock 接口，默认使用线上接口，如需替换为 Mock 接口，修改文件 `.env.development` 的 `VITE_MOCK_DEV_SERVER` 为 `true` **即可**。
@@ -141,7 +105,7 @@ server {
 
 - **其他问题**
 
-  如果有其他问题或者建议，欢迎提交 [Issue](https://github.com/BI-shi-qiang/HY-admin/issues)
+  如果有其他问题或者建议，欢迎提交 bishiqiang56@163.com
 
 ## 提交规范
 
