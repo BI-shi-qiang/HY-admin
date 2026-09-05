@@ -122,8 +122,8 @@
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
   },
-  "repository": "https://gitee.com/youlaiorg/vue3-element-admin.git",
-  "author": "有来开源组织",
+  "repository": "https://github.com/BI-shi-qiang/HY-admin.git",
+  "author": "荷源",
   "license": "MIT",
   "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319"
 }
