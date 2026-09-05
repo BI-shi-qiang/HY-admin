@@ -63,7 +63,9 @@ interface ChatMessage {
   sources?: ChatSource[];
 }
 
-const messages = ref<ChatMessage[]>([]);
+const messages = ref<ChatMessage[]>([
+  { role: "assistant", content: '你好，我是阿毕小助手，可以问关于"我"与"荷源"的一切问题～' },
+]);
 const question = ref("");
 const loading = ref(false);
 const messagesRef = ref<HTMLElement>();
